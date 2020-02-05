@@ -10,13 +10,13 @@ namespace Final_Project_Tester
         public readonly Rank myRank;
 
         // Default constructor
-        Card()
+        private Card()
         {
             
         }
 
         // Parameterized constructor
-        Card(Suit newSuit, Rank newRank)
+        public Card(Suit newSuit, Rank newRank)
         {
             mySuit = newSuit;
             myRank = newRank;
