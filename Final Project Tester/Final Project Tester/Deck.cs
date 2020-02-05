@@ -16,11 +16,13 @@ namespace Final_Project_Tester
             cards = new Card[CARDS_IN_DECK];
             for (int suitVal = 0; suitVal < NUMBER_OF_SUITS; suitVal++)
             {
-                for (int rankVal = 0; rankVal < 9; rankVal++)
+                for (int rankVal = 0; rankVal < NUMBER_OF_RANKS; rankVal++)
                 {
-                    cards[suitVal * 9 + rankVal] = new Card((Suit)suitVal, (Rank)rankVal);
+                    cards[suitVal * NUMBER_OF_RANKS + rankVal] = new Card((Suit)suitVal, (Rank)rankVal);
                 }
             }
+            
+            Shuffle();
         }
 
         public Card GetCard(int cardNum)
