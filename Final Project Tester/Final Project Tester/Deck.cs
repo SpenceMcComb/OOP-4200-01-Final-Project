@@ -6,22 +6,53 @@ namespace Final_Project_Tester
 {
     public class Deck
     {
-        private Card[] theDeck;
+        const int CARDS_IN_DECK = 36;
+        const int NUMBER_OF_SUITS = 4;
+        const int NUMBER_OF_RANKS = 9;
 
-        // Constructor
+        private Card[] cards;
         public Deck()
         {
-            theDeck = new Card[36];
-            int cardIterator = 0;
-
-            for (int suitVal = 0; suitVal < 4; suitVal++)
+            cards = new Card[CARDS_IN_DECK];
+            for (int suitVal = 0; suitVal < NUMBER_OF_SUITS; suitVal++)
             {
-                for (int rankVal = 0; rankVal < 14; rankVal++)
+                for (int rankVal = 1; rankVal < 14; rankVal++)
                 {
-                    theDeck[cardIterator] = new Card(suitVal, rankVal);
-                    cardIterator++;
+                    cards[suitVal * 13 + rankVal - 1] = new Card((Suit)suitVal, (Rank)rankVal);
                 }
             }
+        }
+
+        public Card GetCard(int cardNum)
+        {
+            if (cardNum >= 0 && cardNum < CARDS_IN_DECK)
+                return cards[cardNum];
+            else
+                throw (new System.ArgumentOutOfRangeException("cardNum", cardNum,
+                "Value must be between 0 and " + CARDS_IN_DECK + "."));
+        }
+
+        public void Shuffle()
+        {
+            Card[] newDeck = new Card[CARDS_IN_DECK];
+            bool[] assigned = new bool[CARDS_IN_DECK];
+            Random sourceGen = new Random();
+
+            for (int i = 0; i < CARDS_IN_DECK; i++)
+            {
+                int destCard = 0;
+                bool foundCard = false;
+                while (foundCard == false)
+                {
+                    destCard = sourceGen.Next(CARDS_IN_DECK);
+                    if (assigned[destCard] == false)
+                        foundCard = true;
+                }
+
+                assigned[destCard] = true;
+                newDeck[destCard] = cards[i];
+            }
+            newDeck.CopyTo(cards, 0);
         }
     }
 }
