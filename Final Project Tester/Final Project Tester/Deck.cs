@@ -6,19 +6,19 @@ namespace Final_Project_Tester
 {
     public class Deck
     {
-        const int CARDS_IN_DECK = 36;
         const int NUMBER_OF_SUITS = 4;
         const int NUMBER_OF_RANKS = 9;
-
+        const int CARDS_IN_DECK = 36;
+       
         private Card[] cards;
         public Deck()
         {
             cards = new Card[CARDS_IN_DECK];
             for (int suitVal = 0; suitVal < NUMBER_OF_SUITS; suitVal++)
             {
-                for (int rankVal = 1; rankVal < 14; rankVal++)
+                for (int rankVal = 0; rankVal < 9; rankVal++)
                 {
-                    cards[suitVal * 13 + rankVal - 1] = new Card((Suit)suitVal, (Rank)rankVal);
+                    cards[suitVal * 9 + rankVal] = new Card((Suit)suitVal, (Rank)rankVal);
                 }
             }
         }
