@@ -56,5 +56,15 @@ namespace Final_Project_Tester
             }
             newDeck.CopyTo(cards, 0);
         }
+
+        public void ToString()
+        {
+            // Loop through the deck
+            for (int i = 0; i < 36; i++)
+            {
+                // Draw the cards and display them to the user
+                Console.WriteLine(this[i].ToString());
+            }
+        }
     }
 }
