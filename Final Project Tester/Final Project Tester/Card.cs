@@ -7,34 +7,31 @@ namespace Final_Project_Tester
     /// <summary>
     /// Card class that will be a specific card within a deck
     /// </summary>
-    public class Card
+    public class Card : ICloneable
     {
-        // Readonly properties for the card
-        public readonly Suit mySuit;
-        public readonly Rank myRank;
-
-        // Default constructor
-        private Card()
+        // Returns a shallow copy of the object
+        public object Clone()
         {
-            
+            return MemberwiseClone();
         }
 
-        // Parameterized constructor that will take the suit and which rank the new card is
+        public readonly Suit suit;
+        public readonly Rank rank;
+
         public Card(Suit newSuit, Rank newRank)
         {
-            mySuit = newSuit;
-            myRank = newRank;
+            suit = newSuit;
+            rank = newRank;
         }
 
-        /// <summary>
-        /// Converts the cards values into a readable string
-        /// </summary>
-        /// <returns>String</returns>
+        private Card()
+        {
+        }
+
         public override string ToString()
         {
-            return "The " + myRank + " of " + mySuit + "s.";
+            return "The " + rank + " of " + suit + "s";
         }
-
-
     }
 }
+
