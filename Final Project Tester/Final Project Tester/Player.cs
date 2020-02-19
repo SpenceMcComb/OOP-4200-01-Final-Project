@@ -7,8 +7,8 @@ namespace Final_Project_Tester
     public abstract class Player
     {
         //instance
-        protected abstract String name;
-        protected abstract Cards hand;
+        protected String name;
+        protected Cards hand;
         
         //getters and setters
         protected abstract String GetName();
