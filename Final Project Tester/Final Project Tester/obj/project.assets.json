@@ -8,31 +8,29 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Hamza\\.nuget\\packages\\": {},
+    "C:\\Users\\T\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hamza\\Desktop\\OOP III\\FinalProject\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
+      "projectUniqueName": "C:\\Users\\T\\Desktop\\OOPIII\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
       "projectName": "Final Project Tester",
-      "projectPath": "C:\\Users\\Hamza\\Desktop\\OOP III\\FinalProject\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
-      "packagesPath": "C:\\Users\\Hamza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hamza\\Desktop\\OOP III\\FinalProject\\Final Project Tester\\Final Project Tester\\obj\\",
+      "projectPath": "C:\\Users\\T\\Desktop\\OOPIII\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
+      "packagesPath": "C:\\Users\\T\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\T\\Desktop\\OOPIII\\Final Project\\Final Project Tester\\Final Project Tester\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Hamza\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+        "C:\\Users\\T\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
