@@ -7,47 +7,26 @@ namespace Final_Project_Tester
     public abstract class Player
     {
         //instance
-        private String name = "";
-        private Cards hand = new Cards();
-
-
-        //class 
-        public const String DEFAULT_NAME = "Bruce Wayne";
-        public const Cards DEFAULT_HAND = null;
-
-        //default constructor
-        public Player()
-        {
-            setName(DEFAULT_NAME);
-            setHand(DEFAULT_HAND);
-        }
-
+        protected abstract String name;
+        protected abstract Cards hand;
+        
         //getters and setters
-        protected String getName()
-        {
-            return name;
-        }
+        protected abstract String GetName();
 
-        protected void setName(String name)
-        {
-            this.name = name;
-        }
+        protected abstract void SetName(String name);
 
-        protected Cards getHand()
-        {
-            return hand;
-        }
+        protected abstract Cards GetHand();
 
-        protected void setHand(Cards hand)
-        {
-            this.hand = hand;
-        }
+        protected abstract void SetHand(Cards hand);
 
         //attacking method
         protected abstract Card Attack(bool initialAttack);
 
         //defending method
         protected abstract Card Defend();
+
+        //give card method
+        protected abstract void GiveCard(Card card);
     }
 }
 
