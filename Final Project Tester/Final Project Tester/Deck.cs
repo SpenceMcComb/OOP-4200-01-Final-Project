@@ -6,11 +6,17 @@ namespace Final_Project_Tester
 {
     public class Deck
     {
+        // Declarations of the appropriate constants for a game of Durak
         const int NUMBER_OF_SUITS = 4;
         const int NUMBER_OF_RANKS = 9;
         const int CARDS_IN_DECK = 36;
-       
+
+        // Collection of cards to be used in the creation of a Deck       
         private Card[] cards;
+        
+        /// <summary>
+        /// Default constructor for a Deck
+        /// </summary>
         public Deck()
         {
             cards = new Card[CARDS_IN_DECK];
@@ -20,11 +26,27 @@ namespace Final_Project_Tester
                 {
                     cards[suitVal * NUMBER_OF_RANKS + rankVal] = new Card((Suit)suitVal, (Rank)rankVal);
                 }
-            }
-            
-            Shuffle();
+            }  
         }
 
+        /// <summary>
+        /// Parameterized constructor for a SHUFFLED Deck
+        /// </summary>
+        /// <param name="isShuffled"></param>
+        public Deck(bool isShuffled) : this()
+        {
+            if (isShuffled)
+            {
+                Shuffle();
+            }
+            
+        }
+
+        /// <summary>
+        /// Returns the Xth card from a Deck
+        /// </summary>
+        /// <param name="cardNum"></param>
+        /// <returns></returns>
         public Card GetCard(int cardNum)
         {
             if (cardNum >= 0 && cardNum < CARDS_IN_DECK)
@@ -34,6 +56,9 @@ namespace Final_Project_Tester
                 "Value must be between 0 and " + CARDS_IN_DECK + "."));
         }
 
+        /// <summary>
+        /// Shuffles the Deck
+        /// </summary>
         public void Shuffle()
         {
             Card[] newDeck = new Card[CARDS_IN_DECK];
