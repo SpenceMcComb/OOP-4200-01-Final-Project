@@ -6,51 +6,48 @@ namespace Final_Project_Tester
 {
     public abstract class Player
     {
-        ////instance
-        //private String name = "";
-        //private PlayerHand hand = new playerHand();
-
-        //private bool Attacking = false;
-        //private bool Defending = false;
+        //instance
+        private String name = "";
+        private Cards hand = new Cards();
 
 
-        ////class 
-        //public const String DEFAULT_NAME = "Bruce Wayne";
-        //public const PlayerHand DEFAULT_HAND = null;
+        //class 
+        public const String DEFAULT_NAME = "Bruce Wayne";
+        public const Cards DEFAULT_HAND = null;
 
-        ////public const bool DEFAULT_ATTACK = false;
-        ////public const bool DEFAULT_DEFEND = false;
+        //default constructor
+        public Player()
+        {
+            setName(DEFAULT_NAME);
+            setHand(DEFAULT_HAND);
+        }
 
+        //getters and setters
+        protected String getName()
+        {
+            return name;
+        }
 
-        ////default constructor
-        //public Player()
-        //{
-        //    setName(DEFAULT_NAME);
-        //    setHand(DEFAULT_HAND);
-        //    //setIsAttacking(DEFAULT_ATTACK);
-        //    //setIsDefending(DEFAULT_DEFEND);
-        //}
+        protected void setName(String name)
+        {
+            this.name = name;
+        }
 
-        ////getters and setters
-        //protected String getName()
-        //{
-        //    return name;
-        //}
+        protected Cards getHand()
+        {
+            return hand;
+        }
 
-        //protected void setName(String name)
-        //{
-        //    this.name = name;
-        //}
+        protected void setHand(Cards hand)
+        {
+            this.hand = hand;
+        }
 
-        //protected PlayerHand getHand()
-        //{
-        //    return hand;
-        //}
+        //attacking method
+        protected abstract Card Attack(bool initialAttack);
 
-        //protected void setHand(PlayerHand hand)
-        //{
-        //    this.hand = hand;
-        //}
+        //defending method
+        protected abstract Card Defend();
     }
 }
 
