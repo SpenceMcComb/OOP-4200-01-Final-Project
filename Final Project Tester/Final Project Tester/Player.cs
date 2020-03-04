@@ -17,7 +17,7 @@ namespace Final_Project_Tester
 
         protected abstract Cards GetHand();
 
-        protected abstract void SetHand(Cards hand);
+        protected abstract void Pickup(Card cardOnBoard);
 
         //attacking method
         protected abstract Card Attack(bool initialAttack);
@@ -26,7 +26,7 @@ namespace Final_Project_Tester
         protected abstract Card Defend();
 
         //give card method
-        protected abstract void GiveCard(Card card);
+        protected abstract void Draw(Card card, int numberToDraw);
     }
 }
 
