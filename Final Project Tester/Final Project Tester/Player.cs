@@ -6,27 +6,24 @@ namespace Final_Project_Tester
 {
     public abstract class Player
     {
-        //instance
+        // Instance attributes
         protected String name;
         protected Cards hand;
         
-        //getters and setters
+        // Returns the player's name
         protected abstract String GetName();
 
+        // Sets the player's name
         protected abstract void SetName(String name);
 
-        protected abstract Cards GetHand();
-
-        protected abstract void Pickup(Card cardOnBoard);
+        // The method to grab cards from the board
+        protected abstract void PickupCard(Card cardOnBoard);
 
         //attacking method
-        protected abstract Card Attack(bool initialAttack);
+        protected abstract void PlayCard(Card cardToPlay);
 
-        //defending method
-        protected abstract Card Defend();
-
-        //give card method
-        protected abstract void Draw(Card card, int numberToDraw);
+        // Draw a card from the talon
+        protected abstract void DrawFromTalon(int availableNumberOfCards);
     }
 }
 
