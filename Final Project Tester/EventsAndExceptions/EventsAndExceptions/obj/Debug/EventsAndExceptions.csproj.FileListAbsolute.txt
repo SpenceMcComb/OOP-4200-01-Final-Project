@@ -1,0 +1,6 @@
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\bin\Debug\EventsAndExceptions.exe.config
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\bin\Debug\EventsAndExceptions.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\bin\Debug\EventsAndExceptions.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\obj\Debug\EventsAndExceptions.csprojAssemblyReference.cache
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\obj\Debug\EventsAndExceptions.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\EventsAndExceptions\EventsAndExceptions\obj\Debug\EventsAndExceptions.pdb

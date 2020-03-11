@@ -1,9 +1,0 @@
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\bin\Debug\Ch10FiveCardClient.exe.config
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\bin\Debug\Ch10FiveCardClient.exe
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\bin\Debug\Ch10FiveCardClient.pdb
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\bin\Debug\Ch10CardLib.dll
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\bin\Debug\Ch10CardLib.pdb
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\obj\Debug\Ch10FiveCardClient.csprojAssemblyReference.cache
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\obj\Debug\Ch10FiveCardClient.csproj.CopyComplete
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\obj\Debug\Ch10FiveCardClient.exe
-D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 2\Ch10FiveCardClient\obj\Debug\Ch10FiveCardClient.pdb

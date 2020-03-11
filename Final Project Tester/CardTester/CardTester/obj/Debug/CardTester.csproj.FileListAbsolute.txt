@@ -1,0 +1,9 @@
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\bin\Debug\CardTester.exe.config
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\bin\Debug\CardTester.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\bin\Debug\CardTester.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\bin\Debug\CardLib.dll
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\bin\Debug\CardLib.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\obj\Debug\CardTester.csprojAssemblyReference.cache
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\obj\Debug\CardTester.csproj.CopyComplete
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\obj\Debug\CardTester.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardTester\CardTester\obj\Debug\CardTester.pdb

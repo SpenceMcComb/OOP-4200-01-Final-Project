@@ -1,0 +1,9 @@
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\bin\Debug\CardClient.exe.config
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\bin\Debug\CardClient.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\bin\Debug\CardClient.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\bin\Debug\CardLib.dll
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\bin\Debug\CardLib.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\obj\Debug\CardClient.csprojAssemblyReference.cache
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\obj\Debug\CardClient.csproj.CopyComplete
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\obj\Debug\CardClient.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Tutorial 7\CardClient\CardClient\obj\Debug\CardClient.pdb
