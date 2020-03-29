@@ -190,22 +190,7 @@ namespace CardLib
 
             if (faceUp)
             {
-                // Determine the Joker colour
-                if (myRank == Rank.Joker)
-                {
-                    if (mySuit == Suit.Clubs || mySuit == Suit.Spades)
-                    {
-                        cardString = "Black Joker";
-                    }
-                    else
-                    {
-                        cardString = "Red Joker";
-                    }
-                }
-                else
-                {
-                    cardString = myRank.ToString() + " of " + mySuit.ToString();
-                }
+                cardString = myRank.ToString() + " of " + mySuit.ToString();
             }
             else
             {

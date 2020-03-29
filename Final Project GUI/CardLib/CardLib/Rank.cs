@@ -16,12 +16,7 @@ namespace CardLib
 {
     public enum Rank
     {
-        Ace = 1,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
+        Six = 6,
         Seven,
         Eight,
         Nine,
@@ -29,6 +24,6 @@ namespace CardLib
         Jack,
         Queen,
         King,
-        Joker
+        Ace
     }
 }

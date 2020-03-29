@@ -18,6 +18,13 @@ namespace CardLib
     {
         public event EventHandler LastCardDrawn;
 
+        protected int deckSize = 32;
+        public int DeckSize
+        {
+            get { return deckSize; }
+            set { deckSize = value; }
+        }
+
         // Produces a deep copy of a Deck object.
         public object Clone()
         {
@@ -33,7 +40,7 @@ namespace CardLib
         {
             for (int suitVal = 0; suitVal < 4; suitVal++)
             {
-                for (int rankVal = 1; rankVal < 14; rankVal++)
+                for (int rankVal = 6; rankVal < 14; rankVal++)
                 {
                     cards.Add(new Card((Rank)rankVal, (Suit)suitVal));
                 }
@@ -70,10 +77,10 @@ namespace CardLib
         // Accessor for a Card in the Deck
         public Card GetCard(int cardNum)
         {
-            if (cardNum >= 0 && cardNum <= 51)
+            if (cardNum >= 0 && cardNum <= 35)
             {
                 // Trigger an event if LastCardDrawn is written and the last card is drawn
-                if ((cardNum == 51) && (LastCardDrawn != null))
+                if ((cardNum == 35) && (LastCardDrawn != null))
                     LastCardDrawn(this, EventArgs.Empty);
                 return cards[cardNum];
             }     
@@ -81,20 +88,35 @@ namespace CardLib
                 throw new CardOutOfRangeException(cards.Clone() as Cards);
         }
 
+        // Draws (deletes) a number of cards from the Deck
+        public Card DrawCard()
+        {
+            Card returnedCard = null;
+
+            if (DeckSize != 0)
+            {
+                returnedCard = cards[0];
+                cards.RemoveAt(0);
+                DeckSize--;
+            }
+
+            return returnedCard;
+        }
+
         // Method for randomizing the order of cards in the Deck object
         public void Shuffle()
         {
             Cards newDeck = new Cards();
-            bool[] assigned = new bool[52];
+            bool[] assigned = new bool[36];
             Random sourceGen = new Random();
 
-            for (int i = 0; i < 52; i++)
+            for (int i = 0; i < 36; i++)
             {
                 int sourceCard = 0;
                 bool foundCard = false;
                 while (foundCard == false)
                 {
-                    sourceCard = sourceGen.Next(52);
+                    sourceCard = sourceGen.Next(36);
                     if (assigned[sourceCard] == false)
                         foundCard = true;
                 }
