@@ -1,4 +1,4 @@
-/Final Project Tester/.vs/
+/Final Project Tester/.vs
 /Final Project Tester/Final Project Tester/bin
 /Final Project Tester/Final Project Tester/obj
 /Final Project Tester/Final Project Tester/Final Project Tester.csproj
@@ -7,7 +7,7 @@
 /Final Project Tester/Ch10FiveCardClient/Properties
 /Final Project Tester/Ch10FiveCardClient/App.config
 /Final Project Tester/Ch10FiveCardClient/Ch10FiveCardClient.csproj
-/Final Project Tester/Ch10CardLib/.vs/
+/Final Project Tester/Ch10CardLib/.vs
 /Final Project Tester/Ch10CardLib/Ch10CardLib/bin
 /Final Project Tester/Ch10CardLib/Ch10CardLib/obj
 /Final Project Tester/Ch10CardLib/Ch10CardLib/Properties
@@ -17,3 +17,12 @@
 /Final Project Tester/Ch10CardClient/Properties
 /Final Project Tester/Ch10CardClient/App.config
 /Final Project Tester/Ch10CardClient/Ch10CardClient.csproj
+/Final Project GUI/.vs
+/Final Project GUI/CardBox/bin
+/Final Project GUI/CardBox/obj
+/Final Project GUI/CardBox/Properties
+/Final Project GUI/CardLib/.vs
+/Final Project GUI/CardLib/CardLib/bin
+/Final Project GUI/CardLib/CardLib/obj
+/Final Project GUI/Final Project GUI/bin
+/Final Project GUI/Final Project GUI/obj
