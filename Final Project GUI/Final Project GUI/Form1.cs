@@ -46,7 +46,7 @@ namespace Final_Project_GUI
             // Draw a hand of 7 cards
             for (int i = 1; i <= 7; i++)
             {
-                Card handCard = theTalon.GetCard(i);
+                Card handCard = theTalon.GetCard(0);
                 handCard.FaceUp = true;
                 PictureBox aPictureBox = new PictureBox();
                 aPictureBox.Image = handCard.GetCardImage();
