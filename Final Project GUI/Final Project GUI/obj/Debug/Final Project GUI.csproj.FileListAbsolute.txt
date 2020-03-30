@@ -1,0 +1,12 @@
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\bin\Debug\Final Project GUI.exe.config
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\bin\Debug\Final Project GUI.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\bin\Debug\Final Project GUI.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\bin\Debug\CardLib.dll
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\bin\Debug\CardLib.pdb
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final Project GUI.csprojAssemblyReference.cache
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final_Project_GUI.frmBoard.resources
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final_Project_GUI.Properties.Resources.resources
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final Project GUI.csproj.GenerateResource.cache
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final Project GUI.csproj.CopyComplete
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final Project GUI.exe
+D:\Schoolwork\Durham (2017)\Semester 4\OOP 4200-01\Final Project\Final Project GUI\Final Project GUI\obj\Debug\Final Project GUI.pdb
