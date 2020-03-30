@@ -18,7 +18,7 @@ namespace CardLib
     {
         public event EventHandler LastCardDrawn;
 
-        protected int deckSize = 32;
+        protected int deckSize = 36;
         public int DeckSize
         {
             get { return deckSize; }
@@ -91,16 +91,15 @@ namespace CardLib
         // Draws (deletes) a number of cards from the Deck
         public Card DrawCard()
         {
-            Card returnedCard = null;
+            Card drawnCard = null;
 
-            if (DeckSize != 0)
+            if (Count() != 0)
             {
-                returnedCard = cards[0];
+                drawnCard = cards[0];
                 cards.RemoveAt(0);
-                DeckSize--;
             }
 
-            return returnedCard;
+            return drawnCard;
         }
 
         // Method for randomizing the order of cards in the Deck object
@@ -116,7 +115,7 @@ namespace CardLib
                 bool foundCard = false;
                 while (foundCard == false)
                 {
-                    sourceCard = sourceGen.Next(36);
+                    sourceCard = sourceGen.Next(37);
                     if (assigned[sourceCard] == false)
                         foundCard = true;
                 }
@@ -125,6 +124,12 @@ namespace CardLib
                 newDeck.Add(cards[sourceCard]);
             }
             newDeck.CopyTo(cards);
+        }
+
+
+        public int Count()
+        {
+            return cards.Count;
         }
     }
 }

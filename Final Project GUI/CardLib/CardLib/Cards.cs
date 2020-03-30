@@ -42,7 +42,6 @@ namespace CardLib
                 targetCards[index] = this[index];
             }
         }
-
     }
 
 

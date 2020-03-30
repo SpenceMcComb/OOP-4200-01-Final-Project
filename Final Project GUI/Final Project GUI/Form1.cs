@@ -37,25 +37,41 @@ namespace Final_Project_GUI
         {
             // Create a new, shuffled talon and identify the trump suit
             Deck theTalon = new Deck();
-            theTalon.Shuffle();
-            Card trumpCard = theTalon.GetCard(0);
+            //theTalon.Shuffle();
+            Card trumpCard = theTalon.DrawCard();
             pbTalon.Image = trumpCard.GetCardImage();
             trumpCard.FaceUp = true;
             pbTrumpSuit.Image = trumpCard.GetCardImage();
 
+            //// Draw a hand of 7 cards
+            //for (int i = 1; i <= 7; i++)
+            //{
+            //    Card handCard = theTalon.GetCard(0);
+            //    handCard.FaceUp = true;
+            //    PictureBox aCardBox = CreateCardBox(handCard);
+            //    pnlPlayerHand.Controls.Add(aCardBox);
+            //    RealignCards(pnlPlayerHand);
+            //}
+
             // Draw a hand of 7 cards
             for (int i = 1; i <= 7; i++)
             {
-                Card handCard = theTalon.GetCard(0);
+                Card handCard = theTalon.DrawCard();
                 handCard.FaceUp = true;
-                PictureBox aPictureBox = new PictureBox();
-                aPictureBox.Image = handCard.GetCardImage();
-                aPictureBox.Width = 115;
-                aPictureBox.Height = 176;
-                aPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                pnlPlayerHand.Controls.Add(aPictureBox);
+                PictureBox aCardBox = CreateCardBox(handCard);
+                pnlPlayerHand.Controls.Add(aCardBox);
                 RealignCards(pnlPlayerHand);
-            } 
+            }
+        }
+
+        private PictureBox CreateCardBox(Card aCard)
+        {
+            PictureBox aPictureBox = new PictureBox();
+            aPictureBox.Image = aCard.GetCardImage();
+            aPictureBox.Width = 115;
+            aPictureBox.Height = 176;
+            aPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            return aPictureBox;
         }
 
         private void RealignCards(Panel panelHand)
