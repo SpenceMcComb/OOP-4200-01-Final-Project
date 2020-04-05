@@ -63,6 +63,13 @@ namespace CardLib
             set { faceUp = value; }
         }
 
+        protected bool lastCard = false;
+        public bool LastCard
+        {
+            get { return lastCard; }
+            set { lastCard = value; }
+        }
+
         // Flag for trump usage. If true, trumps are valued higher than other suits
         public static bool useTrumps = false;
 

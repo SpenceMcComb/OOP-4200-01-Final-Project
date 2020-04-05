@@ -48,7 +48,7 @@ namespace CardLib
         }
 
         // Parameterized constructor for a Deck object
-        private Deck(Cards newCards)
+        public Deck(Cards newCards)
         {
             cards = newCards;
         }
@@ -97,6 +97,13 @@ namespace CardLib
             {
                 drawnCard = cards[0];
                 cards.RemoveAt(0);
+                if (Count() == 0)
+                {
+                    drawnCard.LastCard = true;
+                }
+            }
+            else
+            {
             }
 
             return drawnCard;
@@ -115,11 +122,12 @@ namespace CardLib
                 bool foundCard = false;
                 while (foundCard == false)
                 {
-                    sourceCard = sourceGen.Next(37);
+                    sourceCard = sourceGen.Next(36);
                     if (assigned[sourceCard] == false)
                         foundCard = true;
                 }
 
+                sourceCard.ToString();
                 assigned[sourceCard] = true;
                 newDeck.Add(cards[sourceCard]);
             }

@@ -47,6 +47,8 @@
             this.pnlPlayerHand.Name = "pnlPlayerHand";
             this.pnlPlayerHand.Size = new System.Drawing.Size(1326, 176);
             this.pnlPlayerHand.TabIndex = 0;
+            this.pnlPlayerHand.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
+            this.pnlPlayerHand.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
             // 
             // pnlOpponentHand
             // 
@@ -63,6 +65,8 @@
             this.pnlPlayArea.Name = "pnlPlayArea";
             this.pnlPlayArea.Size = new System.Drawing.Size(1078, 264);
             this.pnlPlayArea.TabIndex = 2;
+            this.pnlPlayArea.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
+            this.pnlPlayArea.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
             // 
             // pnlTalon
             // 
@@ -91,6 +95,7 @@
             this.pbTalon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbTalon.TabIndex = 1;
             this.pbTalon.TabStop = false;
+            this.pbTalon.Click += new System.EventHandler(this.pbTalon_Click);
             // 
             // btnAction
             // 
