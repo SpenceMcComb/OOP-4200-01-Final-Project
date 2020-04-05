@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Windows.Forms;
 using CardLib;
 using MyCardBox;
+using System.Collections.Generic;
 
 namespace Final_Project_GUI
 {
@@ -25,6 +21,8 @@ namespace Final_Project_GUI
         private CardBox dragCard;
 
         private Deck theTalon = new Deck();
+
+        private bool playerTurn = true;
 
         #endregion
 
@@ -86,7 +84,7 @@ namespace Final_Project_GUI
         }
 
         /// <summary>
-        /// Deal a card or reset the deck on clicking the deck.
+        /// Deal a card from the deck.
         /// </summary>
         private void pbTalon_Click(object sender, EventArgs e)
         {
@@ -121,8 +119,12 @@ namespace Final_Project_GUI
         /// </summary>
         private void Panel_DragEnter(object sender, DragEventArgs e)
         {
-            // Make the mouse pointer a "move" pointer
-            e.Effect = DragDropEffects.Move;
+            if (playerTurn)
+            {
+                // Make the mouse pointer a "move" pointer
+                e.Effect = DragDropEffects.Move;
+            }
+            
         }
 
 
@@ -131,28 +133,31 @@ namespace Final_Project_GUI
         /// </summary>
         private void Panel_DragDrop(object sender, DragEventArgs e)
         {
-            // If there is a CardBox to move
-            if (dragCard != null)
+            if (playerTurn)
             {
-                // Determine which Panel is which
-                Panel thisPanel = sender as Panel;
-                Panel fromPanel = dragCard.Parent as Panel;
-
-                // If neither panel is null (no conversion issue)
-                if (thisPanel != null && fromPanel != null)
+                // If there is a CardBox to move
+                if (dragCard != null)
                 {
-                    // if the Panels are not the same (this would happen if a card is dragged from one spot in the Panel to another)
-                    if (thisPanel != fromPanel)
+                    // Determine which Panel is which
+                    Panel thisPanel = sender as Panel;
+                    Panel fromPanel = dragCard.Parent as Panel;
+
+                    // If neither panel is null (no conversion issue)
+                    if (thisPanel != null && fromPanel != null)
                     {
-                        // Remove the card from the Panel it started in
-                        fromPanel.Controls.Remove(dragCard);
+                        // if the Panels are not the same (this would happen if a card is dragged from one spot in the Panel to another)
+                        if (thisPanel != fromPanel)
+                        {
+                            // Remove the card from the Panel it started in
+                            fromPanel.Controls.Remove(dragCard);
 
-                        // Add the card to the Panel it was dropped in 
-                        thisPanel.Controls.Add(dragCard);
+                            // Add the card to the Panel it was dropped in 
+                            thisPanel.Controls.Add(dragCard);
 
-                        // Realign cards in both Panels
-                        RealignCards(thisPanel);
-                        RealignCards(fromPanel);
+                            // Realign cards in both Panels
+                            RealignCards(thisPanel);
+                            RealignCards(fromPanel);
+                        }
                     }
                 }
             }
@@ -211,43 +216,56 @@ namespace Final_Project_GUI
         /// </summary>
         void CardBox_MouseDown(object sender, MouseEventArgs e)
         {
-            // Set dragCard
-            dragCard = sender as CardBox;
-
-            // If the conversion worked
-            if (dragCard != null)
+            if (playerTurn)
             {
-                // Set the data to be dragged and the allowed effect dragging will have.
-                DoDragDrop(dragCard, DragDropEffects.Move);
+                // Set dragCard
+                dragCard = sender as CardBox;
+
+                // If the conversion worked
+                if (dragCard != null)
+                {
+                    // Set the data to be dragged and the allowed effect dragging will have.
+                    DoDragDrop(dragCard, DragDropEffects.Move);
+                }
             }
         }
-
 
         /// <summary>
         /// When a CardBox is clicked, move to the opposite panel.
         /// </summary>
         void CardBox_Click(object sender, EventArgs e)
         {
-            // Convert sender to a CardBox
-            CardBox aCardBox = sender as CardBox;
-
-            // If the conversion worked
-            if (aCardBox != null)
+            if (playerTurn)
             {
-                // if the card is in the home panel...
-                if (aCardBox.Parent == pnlPlayerHand)
+                // Convert sender to a CardBox
+                CardBox aCardBox = sender as CardBox;
+
+                // If the conversion worked
+                if (aCardBox != null)
                 {
-                    // Remove the card from the home panel
-                    pnlPlayerHand.Controls.Remove(aCardBox);
+                    // If the card 
+                    if (aCardBox.Parent == pnlPlayerHand)
+                    {
+                        // Remove the card from the home panel
+                        pnlPlayerHand.Controls.Remove(aCardBox);
 
-                    // Add the control to the play panel
-                    pnlPlayArea.Controls.Add(aCardBox);
+                        // Resize the CardBox - not sure why this is needed
+                        aCardBox.Size = cardSize;
+
+                        // Add the control to the play panel
+                        pnlPlayArea.Controls.Add(aCardBox);
+
+                        // Call the opponent's method to start their turn
+                        playerTurn = false;
+                        // Realign the cards 
+                        RealignCards(pnlPlayerHand);
+                        RealignCards(pnlPlayArea);
+                        AITurn();
+                    }
                 }
-            }
 
-            // Realign the cards 
-            RealignCards(pnlPlayerHand);
-            RealignCards(pnlPlayArea);
+                
+            }
         }
 
 
@@ -335,6 +353,33 @@ namespace Final_Project_GUI
                     panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
                 }
             }
+        }
+
+        private void AITurn()
+        {
+            // Collect the panel elements into a hand
+            List<CardBox> theHand = new List<CardBox>();
+            foreach (CardBox element in pnlOpponentHand.Controls)
+            {
+                theHand.Add(element);
+            }
+
+            // Gather the needed information
+            int theIndex = pnlPlayArea.Controls.Count;
+            if (theIndex > 0)
+            {
+                CardBox theCardBox = (CardBox)pnlPlayArea.Controls[theIndex - 1];
+                Card cardToBeat = theCardBox.Card;
+                pnlPlayArea.Controls.Add(pnlOpponentHand.Controls[0]);
+                pnlOpponentHand.Controls.Remove(pnlOpponentHand.Controls[0]);
+            }
+            else
+            {
+                pnlPlayArea.Controls.Add(pnlOpponentHand.Controls[0]);
+                theHand.RemoveAt(0);
+            }
+
+            playerTurn = true;
         }
     }
 }
