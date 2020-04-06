@@ -26,6 +26,8 @@ namespace Final_Project_GUI
         private Deck theTalon = new Deck();
 
         private bool playerTurn;
+        private bool AIAttacking;
+        private bool AIAlreadyAttacked = false;
 
         private Card trumpCard;
 
@@ -125,10 +127,12 @@ namespace Final_Project_GUI
             if (playerLowest < opponentLowest)
             {
                 playerTurn = true;
+                AIAttacking = false;
             }
             else
             {
                 playerTurn = false;
+                AIAttacking = true;
             }
         }
 
@@ -311,9 +315,7 @@ namespace Final_Project_GUI
                         // AI's response
                         AITurn();
                     }
-                }
-
-                
+                } 
             }
         }
 
@@ -409,17 +411,22 @@ namespace Final_Project_GUI
         /// </summary>
         private void AITurn()
         {
-            // Determine play order
-            int theIndex = pnlPlayArea.Controls.Count;
-
             // AI is on defense
-            if (theIndex > 0)
+            if (!AIAttacking)
             {
                 DefendLogicMedium();
             }
-            else // AI is on the offense
+            else if (AIAttacking && !AIAlreadyAttacked) // AI is on the offense
             {
                 AttackLogicEasy();
+                AvailablePlayerCards();
+                playerTurn = true;
+            }
+            else
+            {
+                ContinueAttackAIEasy();
+                AvailablePlayerCards();
+                playerTurn = true;
             }
         }
 
@@ -471,13 +478,65 @@ namespace Final_Project_GUI
 
             // Pass the turn to the human player
             playerTurn = true;
-            ContinueAttackPlayer();
+            AvailablePlayerCards();
         }
 
         private void AttackLogicEasy()
         {
             MoveCard((CardBox)pnlOpponentHand.Controls[0], pnlPlayArea, pnlOpponentHand);
             playerTurn = true;
+            AIAlreadyAttacked = true;
+        }
+
+        private void ContinueAttackAIEasy()
+        {
+            // Determine which ranks are playable
+            List<Rank> availableRanks = new List<Rank>();
+            bool rankMatch = false;
+
+            foreach (CardBox cardBox in pnlPlayArea.Controls)
+            {
+                availableRanks.Add(cardBox.Card.Rank);
+            }
+
+            // Cycle through the hand and determine which cards are no longer playable
+            foreach (CardBox cardBox in pnlOpponentHand.Controls)
+            {
+                foreach (Rank rank in availableRanks)
+                {
+                    if (cardBox.Rank == rank)
+                    {
+                        rankMatch = true;
+                        MoveCard(cardBox, pnlPlayArea, pnlOpponentHand);
+                    }
+                }
+
+                if (!rankMatch)
+                {
+                    cardBox.Click -= CardBox_Click;
+                }
+                else
+                {
+                    MoveCard(cardBox, pnlPlayArea, pnlOpponentHand);
+                }
+            }
+
+            if (!rankMatch)
+            {
+                // The turn ends
+                ReplenishHands(false);
+                ClearBoard();
+
+                // Add the removed event handlers back
+                foreach (CardBox cardBox in pnlPlayerHand.Controls)
+                {
+                    cardBox.Click += CardBox_Click;
+                }
+
+                playerTurn = true;
+                AIAttacking = false;
+                AIAlreadyAttacked = false;
+            }
         }
 
         private void ReplenishHands(bool humanAttacked)
@@ -558,6 +617,12 @@ namespace Final_Project_GUI
             {
                 pnlPlayArea.Controls.RemoveAt(i);
             }
+
+            // Add the removed event handlers back
+            foreach (CardBox cardBox in pnlPlayerHand.Controls)
+            {
+                cardBox.Click += CardBox_Click;
+            }
         }
 
         private void ContinueAttack()
@@ -607,7 +672,7 @@ namespace Final_Project_GUI
             }
         }
 
-        private void ContinueAttackPlayer()
+        private void AvailablePlayerCards()
         {
             // Determine which ranks are playable
             List<Rank> availableRanks = new List<Rank>();
@@ -659,17 +724,18 @@ namespace Final_Project_GUI
             // Replenish hands
             ReplenishHands(true);
 
+            // Clear the board
+            ClearBoard();
+
             // Add the removed event handlers back
             foreach (CardBox cardBox in pnlPlayerHand.Controls)
             {
                 cardBox.Click += CardBox_Click;
             }
 
-            // Clear the board
-            ClearBoard();
-
             // Pass the turn
             playerTurn = false;
+            AIAttacking = true;
             AITurn();
         }
     }
