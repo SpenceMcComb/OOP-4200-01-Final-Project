@@ -15,6 +15,9 @@ namespace Final_Project_GUI
         // The default card size
         static private Size cardSize = new Size(90, 151);
 
+        // Default hand size
+        static private int handSize = 6;
+
         // The amount, in points, that CardBox controls are enlarged when hovered over. 
         private const int POP = 25;
 
@@ -51,8 +54,8 @@ namespace Final_Project_GUI
             trumpCard.FaceUp = true;
             pbTrumpSuit.Image = trumpCard.GetCardImage();
 
-            // Draw a hand of 7 cards - Player
-            for (int i = 1; i <= 7; i++)
+            // Draw a hand of 6 cards - Player
+            for (int i = 1; i <= handSize; i++)
             {
                 Card handCard = theTalon.DrawCard();
                 handCard.FaceUp = true;
@@ -74,8 +77,8 @@ namespace Final_Project_GUI
                 RealignCards(pnlPlayerHand);
             }
 
-            // Draw a hand of 7 cards - AI
-            for (int i = 1; i <= 7; i++)
+            // Draw a hand of 6 cards - AI
+            for (int i = 1; i <= handSize; i++)
             {
                 Card handCard = theTalon.DrawCard();
                 handCard.FaceUp = true; // Change this to false later
@@ -357,10 +360,15 @@ namespace Final_Project_GUI
             }
         }
 
+        /// <summary>
+        /// This will be there area where the difficulty is determined
+        /// </summary>
         private void AITurn()
         {
-            // Gather the needed information
+            // Determine play order
             int theIndex = pnlPlayArea.Controls.Count;
+
+            // AI went second
             if (theIndex > 0)
             {
                 TurnLogicMedium();
@@ -369,7 +377,6 @@ namespace Final_Project_GUI
             {
                 
             }
-            
         }
 
         /// <summary>
@@ -381,6 +388,7 @@ namespace Final_Project_GUI
             CardBox inPlayCardBox = (CardBox)pnlPlayArea.Controls[theNumber];
             Card cardToBeat = inPlayCardBox.Card;
             bool winning = false;
+            CardBox thePlay = null;
 
             // Determine which card to play
             foreach (CardBox handCard in pnlOpponentHand.Controls)
@@ -388,7 +396,7 @@ namespace Final_Project_GUI
                 // Suits match, card is higher value
                 if (handCard.Card.Suit == cardToBeat.Suit && handCard.Rank > cardToBeat.Rank)
                 {
-                    MoveCard(handCard, pnlPlayArea, pnlOpponentHand);
+                    thePlay = handCard;
                     winning = true;
                 }
             }
@@ -402,15 +410,56 @@ namespace Final_Project_GUI
                     // Suits match, card is higher value
                     if (handCard.Card.Suit == trumpCard.Suit)
                     {
-                        MoveCard(handCard, pnlPlayArea, pnlOpponentHand);
+                        thePlay = handCard;
                         winning = true;
                     }
                 }
+            }
+            else if (winning)
+            {
+                MoveCard(thePlay, pnlPlayArea, pnlOpponentHand);
             }
             else
             {
                 MoveCard(inPlayCardBox, pnlOpponentHand, pnlPlayArea);
             }
+
+            // If the card has been beat by the AI
+            if (winning)
+            {
+                // Remove the cards from the board
+                foreach (CardBox cardToRemove in pnlPlayArea.Controls)
+                {
+                    pnlPlayArea.Controls.Remove(cardToRemove);
+                }
+
+                // Replenish hand first
+                for (int i = pnlOpponentHand.Controls.Count; i < handSize; i++)
+                {
+                    Card newCard = theTalon.DrawCard();
+                    newCard.FaceUp = true;
+                    CardBox newCardBox = new CardBox(newCard);
+                    pnlOpponentHand.Controls.Add(newCardBox);
+                    RealignCards(pnlOpponentHand);                    
+                }
+
+                // Replenish player hand second
+                for (int i = pnlPlayerHand.Controls.Count; i < handSize; i++)
+                {
+                    Card newCard = theTalon.DrawCard();
+                    newCard.FaceUp = true;
+                    CardBox newCardBox = new CardBox(newCard);
+                    pnlPlayerHand.Controls.Add(newCardBox);
+                    RealignCards(pnlPlayerHand);
+                }
+                
+            }
+            else
+            {
+
+            }
+
+
 
             // Pass the turn to the human player
             playerTurn = true;
