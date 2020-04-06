@@ -412,14 +412,14 @@ namespace Final_Project_GUI
             // Determine play order
             int theIndex = pnlPlayArea.Controls.Count;
 
-            // AI went second
+            // AI is on defense
             if (theIndex > 0)
             {
                 DefendLogicMedium();
             }
-            else // AI goes first
+            else // AI is on the offense
             {
-                
+                AttackLogicEasy();
             }
         }
 
@@ -471,28 +471,35 @@ namespace Final_Project_GUI
 
             // Pass the turn to the human player
             playerTurn = true;
-            ContinueAttack();
+            ContinueAttackPlayer();
         }
 
-        // Cleans the board, replenishes the hands
-        private void Cleanup(bool humanWin)
+        private void AttackLogicEasy()
         {
-            if (humanWin)
-            {
-                // Remove the cards from the play area
-                int count = pnlPlayArea.Controls.Count;
-                for (int i = count - 1; i >= 0; i--)
-                {
-                    pnlPlayArea.Controls.RemoveAt(i);
-                }
+            MoveCard((CardBox)pnlOpponentHand.Controls[0], pnlPlayArea, pnlOpponentHand);
+            playerTurn = true;
+        }
 
+        private void ReplenishHands(bool humanAttacked)
+        {
+            if (humanAttacked)
+            {
                 // Replenish player hand first
                 for (int i = pnlPlayerHand.Controls.Count; i < handSize; i++)
                 {
                     Card newCard = theTalon.DrawCard();
                     newCard.FaceUp = true;
-                    CardBox newCardBox = new CardBox(newCard);
-                    pnlPlayerHand.Controls.Add(newCardBox);
+
+                    // Create a new CardBox control based on the card drawn
+                    CardBox aCardBox = new CardBox(newCard);
+
+                    // Wire the event handlers for this CardBox
+                    aCardBox.Click += CardBox_Click;
+                    aCardBox.MouseEnter += CardBox_MouseEnter;
+                    aCardBox.MouseLeave += CardBox_MouseLeave;
+
+                    // Add the new control to the appropriate panel
+                    pnlPlayerHand.Controls.Add(aCardBox);
                 }
                 RealignCards(pnlPlayerHand);
 
@@ -501,21 +508,18 @@ namespace Final_Project_GUI
                 {
                     Card newCard = theTalon.DrawCard();
                     newCard.FaceUp = true;
-                    CardBox newCardBox = new CardBox(newCard);
-                    pnlOpponentHand.Controls.Add(newCardBox);
+
+                    // Create a new CardBox control based on the card drawn
+                    CardBox aCardBox = new CardBox(newCard);
+
+                    // Add the new control to the appropriate panel
+                    pnlOpponentHand.Controls.Add(aCardBox);
                 }
                 RealignCards(pnlOpponentHand);
             }
             else
             {
-                // Remove the cards from the play area
-                int count = pnlPlayArea.Controls.Count;
-                for (int i = count - 1; i >= 0; i--)
-                {
-                    pnlPlayArea.Controls.RemoveAt(i);
-                }
-
-                // Replenish hand first
+                // Replenish AI hand first
                 for (int i = pnlOpponentHand.Controls.Count; i < handSize; i++)
                 {
                     Card newCard = theTalon.DrawCard();
@@ -530,10 +534,29 @@ namespace Final_Project_GUI
                 {
                     Card newCard = theTalon.DrawCard();
                     newCard.FaceUp = true;
-                    CardBox newCardBox = new CardBox(newCard);
-                    pnlPlayerHand.Controls.Add(newCardBox);
+
+                    // Create a new CardBox control based on the card drawn
+                    CardBox aCardBox = new CardBox(newCard);
+
+                    // Wire the event handlers for this CardBox
+                    aCardBox.Click += CardBox_Click;
+                    aCardBox.MouseEnter += CardBox_MouseEnter;
+                    aCardBox.MouseLeave += CardBox_MouseLeave;
+
+                    // Add the new control to the appropriate panel
+                    pnlPlayerHand.Controls.Add(aCardBox);
                 }
                 RealignCards(pnlPlayerHand);
+            }
+        }
+
+        private void ClearBoard()
+        {
+            // Remove the cards from the play area
+            int count = pnlPlayArea.Controls.Count;
+            for (int i = count - 1; i >= 0; i--)
+            {
+                pnlPlayArea.Controls.RemoveAt(i);
             }
         }
 
@@ -574,7 +597,7 @@ namespace Final_Project_GUI
                             cardBox.Click -= CardBox_Click;
                         }
                     }
-                    // The suits match
+                    // The suits match, but the rank is lower
                     else if (cardBox.Card.Rank < cardBoxToBeat.Card.Rank)
                     {
                         // DIM THE UNPLAYABLE CARDS and remove the click event from them
@@ -584,6 +607,38 @@ namespace Final_Project_GUI
             }
         }
 
+        private void ContinueAttackPlayer()
+        {
+            // Determine which ranks are playable
+            List<Rank> availableRanks = new List<Rank>();
+            bool rankMatch = false;
+
+            foreach (CardBox cardBox in pnlPlayArea.Controls)
+            {
+                availableRanks.Add(cardBox.Card.Rank);
+            }
+
+            // Cycle through the hand and determine which cards are no longer playable
+            foreach (CardBox cardBox in pnlPlayerHand.Controls)
+            {
+                foreach (Rank rank in availableRanks)
+                {
+                    if (cardBox.Rank == rank)
+                    {
+                        rankMatch = true;
+                    }
+                }
+
+                if (!rankMatch)
+                {
+                    cardBox.Click -= CardBox_Click;
+                }
+                else
+                {
+                    rankMatch = false;
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -597,6 +652,25 @@ namespace Final_Project_GUI
             fromPanel.Controls.Remove(theCardBox);
             RealignCards(toPanel);
             RealignCards(fromPanel);
+        }
+
+        private void btnAction_Click(object sender, EventArgs e)
+        {
+            // Replenish hands
+            ReplenishHands(true);
+
+            // Add the removed event handlers back
+            foreach (CardBox cardBox in pnlPlayerHand.Controls)
+            {
+                cardBox.Click += CardBox_Click;
+            }
+
+            // Clear the board
+            ClearBoard();
+
+            // Pass the turn
+            playerTurn = false;
+            AITurn();
         }
     }
 }

@@ -103,8 +103,9 @@
             this.btnAction.Name = "btnAction";
             this.btnAction.Size = new System.Drawing.Size(236, 76);
             this.btnAction.TabIndex = 0;
-            this.btnAction.Text = "Waiting...";
+            this.btnAction.Text = "Pass";
             this.btnAction.UseVisualStyleBackColor = true;
+            this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
             // 
             // frmBoard
             // 
