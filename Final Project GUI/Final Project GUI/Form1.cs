@@ -25,7 +25,7 @@ namespace Final_Project_GUI
 
         private Deck theTalon = new Deck();
 
-        private bool playerTurn = true;
+        private bool playerTurn;
 
         private Card trumpCard;
 
@@ -62,9 +62,6 @@ namespace Final_Project_GUI
                 CardBox aCardBox = new CardBox(handCard);
 
                 // Wire the apporpriate event handlers for each cardbox
-                aCardBox.MouseDown += CardBox_MouseDown;
-                aCardBox.DragEnter += CardBox_DragEnter;
-                aCardBox.DragDrop += CardBox_DragDrop;
                 aCardBox.Click += CardBox_Click;
 
                 // wire CardBox_MouseEnter for the "POP" visual effect
@@ -86,6 +83,53 @@ namespace Final_Project_GUI
                 pnlOpponentHand.Controls.Add(aCardBox);
                 RealignCards(pnlOpponentHand);
             }
+
+            // Establish a baseline card for each player
+            int playerLowest = 0;
+            int opponentLowest = 0;
+
+            // Determine the lowest card of the proper suit - player
+            foreach (CardBox cards in pnlPlayerHand.Controls)
+            {
+                if (cards.Card.Suit == trumpCard.Suit)
+                {
+                    if (playerLowest == 0)
+                    {
+                        playerLowest = (int)cards.Card.Rank;
+                    }
+                    else if ((int)cards.Card.Rank < playerLowest)
+                    {
+                        playerLowest = (int)cards.Card.Rank;
+                    }
+                }
+            }
+
+            // Determine the lowest card of the proper suit - AI
+            foreach (CardBox cards in pnlOpponentHand.Controls)
+            {
+                if (cards.Card.Suit == trumpCard.Suit)
+                {
+                    if (opponentLowest == 0)
+                    {
+                        opponentLowest = (int)cards.Card.Rank;
+                    }
+                    else if ((int)cards.Card.Rank < playerLowest)
+                    {
+                        opponentLowest = (int)cards.Card.Rank;
+                    }
+                }
+            }
+
+            // Determine whose turn it is based on the lowest trump card
+            // THIS DOESN'T ACCOUNT FOR TIES
+            if (playerLowest < opponentLowest)
+            {
+                playerTurn = true;
+            }
+            else
+            {
+                playerTurn = false;
+            }
         }
 
         /// <summary>
@@ -104,9 +148,6 @@ namespace Final_Project_GUI
                 CardBox aCardBox = new CardBox(card);
 
                 // Wire the event handlers for this CardBox
-                //aCardBox.MouseDown += CardBox_MouseDown;
-                aCardBox.DragEnter += CardBox_DragEnter;
-                aCardBox.DragDrop += CardBox_DragDrop;
                 aCardBox.Click += CardBox_Click;
                 aCardBox.MouseEnter += CardBox_MouseEnter;
                 aCardBox.MouseLeave += CardBox_MouseLeave;
@@ -262,9 +303,12 @@ namespace Final_Project_GUI
 
                         // Call the opponent's method to start their turn
                         playerTurn = false;
+
                         // Realign the cards 
                         RealignCards(pnlPlayerHand);
                         RealignCards(pnlPlayArea);
+
+                        // AI's response
                         AITurn();
                     }
                 }
@@ -371,7 +415,7 @@ namespace Final_Project_GUI
             // AI went second
             if (theIndex > 0)
             {
-                TurnLogicMedium();
+                DefendLogicMedium();
             }
             else // AI goes first
             {
@@ -382,11 +426,11 @@ namespace Final_Project_GUI
         /// <summary>
         /// 
         /// </summary>
-        private void TurnLogicMedium()
+        private void DefendLogicMedium()
         {
             int theNumber = pnlPlayArea.Controls.Count - 1;
-            CardBox inPlayCardBox = (CardBox)pnlPlayArea.Controls[theNumber];
-            Card cardToBeat = inPlayCardBox.Card;
+            CardBox cardBoxToBeat = (CardBox)pnlPlayArea.Controls[theNumber];
+            Card cardToBeat = cardBoxToBeat.Card;
             bool winning = false;
             CardBox thePlay = null;
 
@@ -417,20 +461,58 @@ namespace Final_Project_GUI
             }
             else if (winning)
             {
+                // Play the winning card
                 MoveCard(thePlay, pnlPlayArea, pnlOpponentHand);
+            }
+            else // Unwinnable, pick up the card
+            {
+                MoveCard(cardBoxToBeat, pnlOpponentHand, pnlPlayArea);
+            }
+
+            // Pass the turn to the human player
+            playerTurn = true;
+            ContinueAttack();
+        }
+
+        // Cleans the board, replenishes the hands
+        private void Cleanup(bool humanWin)
+        {
+            if (humanWin)
+            {
+                // Remove the cards from the play area
+                int count = pnlPlayArea.Controls.Count;
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    pnlPlayArea.Controls.RemoveAt(i);
+                }
+
+                // Replenish player hand first
+                for (int i = pnlPlayerHand.Controls.Count; i < handSize; i++)
+                {
+                    Card newCard = theTalon.DrawCard();
+                    newCard.FaceUp = true;
+                    CardBox newCardBox = new CardBox(newCard);
+                    pnlPlayerHand.Controls.Add(newCardBox);
+                }
+                RealignCards(pnlPlayerHand);
+
+                // Replenish AI hand second
+                for (int i = pnlOpponentHand.Controls.Count; i < handSize; i++)
+                {
+                    Card newCard = theTalon.DrawCard();
+                    newCard.FaceUp = true;
+                    CardBox newCardBox = new CardBox(newCard);
+                    pnlOpponentHand.Controls.Add(newCardBox);
+                }
+                RealignCards(pnlOpponentHand);
             }
             else
             {
-                MoveCard(inPlayCardBox, pnlOpponentHand, pnlPlayArea);
-            }
-
-            // If the card has been beat by the AI
-            if (winning)
-            {
-                // Remove the cards from the board
-                foreach (CardBox cardToRemove in pnlPlayArea.Controls)
+                // Remove the cards from the play area
+                int count = pnlPlayArea.Controls.Count;
+                for (int i = count - 1; i >= 0; i--)
                 {
-                    pnlPlayArea.Controls.Remove(cardToRemove);
+                    pnlPlayArea.Controls.RemoveAt(i);
                 }
 
                 // Replenish hand first
@@ -440,8 +522,8 @@ namespace Final_Project_GUI
                     newCard.FaceUp = true;
                     CardBox newCardBox = new CardBox(newCard);
                     pnlOpponentHand.Controls.Add(newCardBox);
-                    RealignCards(pnlOpponentHand);                    
                 }
+                RealignCards(pnlOpponentHand);
 
                 // Replenish player hand second
                 for (int i = pnlPlayerHand.Controls.Count; i < handSize; i++)
@@ -450,19 +532,56 @@ namespace Final_Project_GUI
                     newCard.FaceUp = true;
                     CardBox newCardBox = new CardBox(newCard);
                     pnlPlayerHand.Controls.Add(newCardBox);
-                    RealignCards(pnlPlayerHand);
                 }
-                
+                RealignCards(pnlPlayerHand);
             }
-            else
+        }
+
+        private void ContinueAttack()
+        {
+            // Determine the current card to beat
+            int cardsPlayed = pnlPlayArea.Controls.Count;
+            CardBox cardBoxToBeat = (CardBox)pnlPlayArea.Controls[cardsPlayed - 1];
+
+            // Cycle through the hand and determine which cards are no longer playable
+            foreach (CardBox cardBox in pnlPlayerHand.Controls)
             {
-
+                // Card played is a trump card
+                if (cardBoxToBeat.Suit == trumpCard.Suit)
+                {
+                    // The hand card is not trump suit
+                    if (cardBox.Card.Suit != cardBoxToBeat.Card.Suit)
+                    {
+                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
+                        cardBox.Click -= CardBox_Click;
+                    }
+                    // The card is the same suit, but of lower value
+                    else if (cardBox.Card.Rank < cardBoxToBeat.Card.Rank)
+                    {
+                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
+                        cardBox.Click -= CardBox_Click;
+                    }
+                }
+                else // Card to beat is not trump card
+                {
+                    // The suits do not match
+                    if (cardBox.Card.Suit != cardBoxToBeat.Suit)
+                    {
+                        // This card is not a trump card
+                        if (cardBox.Card.Suit != trumpCard.Suit)
+                        {
+                            // DIM THE UNPLAYABLE CARDS and remove the click event from them
+                            cardBox.Click -= CardBox_Click;
+                        }
+                    }
+                    // The suits match
+                    else if (cardBox.Card.Rank < cardBoxToBeat.Card.Rank)
+                    {
+                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
+                        cardBox.Click -= CardBox_Click;
+                    }
+                }
             }
-
-
-
-            // Pass the turn to the human player
-            playerTurn = true;
         }
 
 
