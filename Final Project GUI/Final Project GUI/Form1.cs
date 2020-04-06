@@ -24,6 +24,8 @@ namespace Final_Project_GUI
 
         private bool playerTurn = true;
 
+        private Card trumpCard;
+
         #endregion
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace Final_Project_GUI
             // Create a new, SHUFFLED talon and identify the trump suit
 
             //theTalon.Shuffle();
-            Card trumpCard = theTalon.DrawCard();
+            trumpCard = theTalon.DrawCard();
             pbTalon.Image = trumpCard.GetCardImage();
             trumpCard.FaceUp = true;
             pbTrumpSuit.Image = trumpCard.GetCardImage();
@@ -357,29 +359,76 @@ namespace Final_Project_GUI
 
         private void AITurn()
         {
-            // Collect the panel elements into a hand
-            List<CardBox> theHand = new List<CardBox>();
-            foreach (CardBox element in pnlOpponentHand.Controls)
-            {
-                theHand.Add(element);
-            }
-
             // Gather the needed information
             int theIndex = pnlPlayArea.Controls.Count;
             if (theIndex > 0)
             {
-                CardBox theCardBox = (CardBox)pnlPlayArea.Controls[theIndex - 1];
-                Card cardToBeat = theCardBox.Card;
-                pnlPlayArea.Controls.Add(pnlOpponentHand.Controls[0]);
-                pnlOpponentHand.Controls.Remove(pnlOpponentHand.Controls[0]);
+                TurnLogicMedium();
+            }
+            else // AI goes first
+            {
+                
+            }
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void TurnLogicMedium()
+        {
+            int theNumber = pnlPlayArea.Controls.Count - 1;
+            CardBox inPlayCardBox = (CardBox)pnlPlayArea.Controls[theNumber];
+            Card cardToBeat = inPlayCardBox.Card;
+            bool winning = false;
+
+            // Determine which card to play
+            foreach (CardBox handCard in pnlOpponentHand.Controls)
+            {
+                // Suits match, card is higher value
+                if (handCard.Card.Suit == cardToBeat.Suit && handCard.Rank > cardToBeat.Rank)
+                {
+                    MoveCard(handCard, pnlPlayArea, pnlOpponentHand);
+                    winning = true;
+                }
+            }
+
+            // Didn't win by rank, look for trump card in hand
+            if (!winning && cardToBeat.Suit != trumpCard.Suit)
+            {
+                // Determine which card to play
+                foreach (CardBox handCard in pnlOpponentHand.Controls)
+                {
+                    // Suits match, card is higher value
+                    if (handCard.Card.Suit == trumpCard.Suit)
+                    {
+                        MoveCard(handCard, pnlPlayArea, pnlOpponentHand);
+                        winning = true;
+                    }
+                }
             }
             else
             {
-                pnlPlayArea.Controls.Add(pnlOpponentHand.Controls[0]);
-                theHand.RemoveAt(0);
+                MoveCard(inPlayCardBox, pnlOpponentHand, pnlPlayArea);
             }
 
+            // Pass the turn to the human player
             playerTurn = true;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="theCardBox"></param>
+        /// <param name="toPanel"></param>
+        /// <param name="fromPanel"></param>
+        private void MoveCard(CardBox theCardBox, Panel toPanel, Panel fromPanel)
+        {
+            toPanel.Controls.Add(theCardBox);
+            fromPanel.Controls.Remove(theCardBox);
+            RealignCards(toPanel);
+            RealignCards(fromPanel);
         }
     }
 }
