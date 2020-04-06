@@ -95,7 +95,6 @@
             this.pbTalon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbTalon.TabIndex = 1;
             this.pbTalon.TabStop = false;
-            this.pbTalon.Click += new System.EventHandler(this.pbTalon_Click);
             // 
             // btnAction
             // 

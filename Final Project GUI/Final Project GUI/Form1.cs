@@ -21,14 +21,18 @@ namespace Final_Project_GUI
         // The amount, in points, that CardBox controls are enlarged when hovered over. 
         private const int POP = 25;
 
+        // If we choose to implement drag and drop functionality (doesn't work alongside _Click)
         private CardBox dragCard;
 
+        // Create the talon
         private Deck theTalon = new Deck();
 
+        // Variables for determining whose turn it is
         private bool playerTurn;
         private bool AIAttacking;
         private bool AIAlreadyAttacked = false;
 
+        // The face-up trump card
         private Card trumpCard;
 
         #endregion
@@ -49,7 +53,6 @@ namespace Final_Project_GUI
         private void frmBoard_Load(object sender, EventArgs e)
         {
             // Create a new, SHUFFLED talon and identify the trump suit
-
             //theTalon.Shuffle();
             trumpCard = theTalon.DrawCard();
             pbTalon.Image = trumpCard.GetCardImage();
@@ -133,34 +136,6 @@ namespace Final_Project_GUI
             {
                 playerTurn = false;
                 AIAttacking = true;
-            }
-        }
-
-        /// <summary>
-        /// Deal a card from the deck.
-        /// </summary>
-        private void pbTalon_Click(object sender, EventArgs e)
-        {
-            // If the deck is empty, do nothing
-            if (pbTalon.Image != null)
-            {
-                // Draw a card from the talon
-                Card card = theTalon.DrawCard();
-                card.FaceUp = true; 
-
-                // Create a new CardBox control based on the card drawn
-                CardBox aCardBox = new CardBox(card);
-
-                // Wire the event handlers for this CardBox
-                aCardBox.Click += CardBox_Click;
-                aCardBox.MouseEnter += CardBox_MouseEnter;
-                aCardBox.MouseLeave += CardBox_MouseLeave;
-
-                // Add the new control to the appropriate panel
-                pnlPlayerHand.Controls.Add(aCardBox);
-
-                // Realign the controls in the panel so they appear correctly.
-                RealignCards(pnlPlayerHand);
             }
         }
 
@@ -511,31 +486,26 @@ namespace Final_Project_GUI
                     }
                 }
 
-                if (!rankMatch)
-                {
-                    cardBox.Click -= CardBox_Click;
-                }
-                else
+                if (rankMatch)
                 {
                     MoveCard(cardBox, pnlPlayArea, pnlOpponentHand);
                 }
-            }
-
-            if (!rankMatch)
-            {
-                // The turn ends
-                ReplenishHands(false);
-                ClearBoard();
-
-                // Add the removed event handlers back
-                foreach (CardBox cardBox in pnlPlayerHand.Controls)
+                else
                 {
-                    cardBox.Click += CardBox_Click;
-                }
+                    // The turn ends
+                    ReplenishHands(false);
+                    ClearBoard();
 
-                playerTurn = true;
-                AIAttacking = false;
-                AIAlreadyAttacked = false;
+                    // Add the removed event handlers back
+                    foreach (CardBox cardBoxPlayer in pnlPlayerHand.Controls)
+                    {
+                        cardBox.Click += CardBox_Click;
+                    }
+
+                    playerTurn = true;
+                    AIAttacking = false;
+                    AIAlreadyAttacked = false;
+                }
             }
         }
 
@@ -623,53 +593,10 @@ namespace Final_Project_GUI
             {
                 cardBox.Click += CardBox_Click;
             }
-        }
 
-        private void ContinueAttack()
-        {
-            // Determine the current card to beat
-            int cardsPlayed = pnlPlayArea.Controls.Count;
-            CardBox cardBoxToBeat = (CardBox)pnlPlayArea.Controls[cardsPlayed - 1];
-
-            // Cycle through the hand and determine which cards are no longer playable
-            foreach (CardBox cardBox in pnlPlayerHand.Controls)
-            {
-                // Card played is a trump card
-                if (cardBoxToBeat.Suit == trumpCard.Suit)
-                {
-                    // The hand card is not trump suit
-                    if (cardBox.Card.Suit != cardBoxToBeat.Card.Suit)
-                    {
-                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
-                        cardBox.Click -= CardBox_Click;
-                    }
-                    // The card is the same suit, but of lower value
-                    else if (cardBox.Card.Rank < cardBoxToBeat.Card.Rank)
-                    {
-                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
-                        cardBox.Click -= CardBox_Click;
-                    }
-                }
-                else // Card to beat is not trump card
-                {
-                    // The suits do not match
-                    if (cardBox.Card.Suit != cardBoxToBeat.Suit)
-                    {
-                        // This card is not a trump card
-                        if (cardBox.Card.Suit != trumpCard.Suit)
-                        {
-                            // DIM THE UNPLAYABLE CARDS and remove the click event from them
-                            cardBox.Click -= CardBox_Click;
-                        }
-                    }
-                    // The suits match, but the rank is lower
-                    else if (cardBox.Card.Rank < cardBoxToBeat.Card.Rank)
-                    {
-                        // DIM THE UNPLAYABLE CARDS and remove the click event from them
-                        cardBox.Click -= CardBox_Click;
-                    }
-                }
-            }
+            playerTurn = false;
+            AIAttacking = false;
+            AIAlreadyAttacked = false;
         }
 
         private void AvailablePlayerCards()
@@ -697,10 +624,6 @@ namespace Final_Project_GUI
                 if (!rankMatch)
                 {
                     cardBox.Click -= CardBox_Click;
-                }
-                else
-                {
-                    rankMatch = false;
                 }
             }
         }
