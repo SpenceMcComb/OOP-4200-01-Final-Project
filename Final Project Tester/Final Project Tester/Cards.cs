@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace Final_Project_Tester
 {
-    public class Cards : CollectionBase, ICloneable
+    public class Cards : List<Card>, ICloneable
     {
         // Returns a deep copy of the object
         public object Clone()
         {
             Cards newCards = new Cards();
-            foreach (Card sourceCard in List)
+            foreach (Card sourceCard in this)
             {
                 newCards.Add((Card)sourceCard.Clone());
             }
@@ -32,13 +32,13 @@ namespace Final_Project_Tester
         // Adds a new card to the list
         public void Add(Card newCard)
         {
-            List.Add(newCard);
+            this.Add(newCard);
         }
 
         // Removes an old card from the list
         public void Remove(Card oldCard)
         {
-            List.Remove(oldCard);
+            this.Remove(oldCard);
         }
 
         // Property for a card from the card list
@@ -46,11 +46,11 @@ namespace Final_Project_Tester
         {
             get
             {
-                return (Card)List[cardIndex];
+                return (Card)this[cardIndex];
             }
             set
             {
-                List[cardIndex] = value;
+                this[cardIndex] = value;
             }
         }
 
@@ -75,11 +75,21 @@ namespace Final_Project_Tester
         /// </summary>
         /// <param name="aCard"></param>
         /// <returns></returns>
-        public bool Contains(Card aCard)
+        //public bool Contains(Card aCard)
+        //{
+        //    return InnerList.Contains(aCard);
+        //}
+
+
+        //gets a card based on int number
+        public Card GetCard(int cardNum, Cards cards)
         {
-            return InnerList.Contains(aCard);
+
+            if (cardNum >= 0 && cardNum <= 51)
+                return cards[cardNum];
+            else
+                throw (new System.ArgumentOutOfRangeException("cardNum", cardNum,
+                       "Value must be between 0 and 51."));
         }
-
-
     }
 }

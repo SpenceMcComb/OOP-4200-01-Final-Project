@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Schoolwork\\Durham (2017)\\Semester 4\\OOP 4200-01\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj": {}
+    "C:\\Users\\Hamza\\Desktop\\OOP III\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj": {}
   },
   "projects": {
-    "D:\\Schoolwork\\Durham (2017)\\Semester 4\\OOP 4200-01\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj": {
+    "C:\\Users\\Hamza\\Desktop\\OOP III\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Schoolwork\\Durham (2017)\\Semester 4\\OOP 4200-01\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
+        "projectUniqueName": "C:\\Users\\Hamza\\Desktop\\OOP III\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
         "projectName": "Final Project Tester",
-        "projectPath": "D:\\Schoolwork\\Durham (2017)\\Semester 4\\OOP 4200-01\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
-        "packagesPath": "C:\\Users\\Spence\\.nuget\\packages\\",
-        "outputPath": "D:\\Schoolwork\\Durham (2017)\\Semester 4\\OOP 4200-01\\Final Project\\Final Project Tester\\Final Project Tester\\obj\\",
+        "projectPath": "C:\\Users\\Hamza\\Desktop\\OOP III\\Final Project\\Final Project Tester\\Final Project Tester\\Final Project Tester.csproj",
+        "packagesPath": "C:\\Users\\Hamza\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hamza\\Desktop\\OOP III\\Final Project\\Final Project Tester\\Final Project Tester\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Spence\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hamza\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
