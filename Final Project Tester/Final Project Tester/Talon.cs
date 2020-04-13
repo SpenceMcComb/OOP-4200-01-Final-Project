@@ -66,5 +66,42 @@ namespace Final_Project_Tester
         {
             theTalon.Clear();
         }
+
+        //will compare the cards enetered into the river 
+        public bool cardDefendValidation(Card trumpCard, Card card)
+        {
+            bool defended = false;
+
+            if(theTalon.Count % 2 == 0)
+            {
+                if (card.Suit == theTalon[theTalon.Count - 1].Suit | theTalon[1].Suit == trumpCard.Suit)
+                {
+                    if (card > theTalon[theTalon.Count - 1] | theTalon[theTalon.Count].Suit == trumpCard.Suit)
+                        defended = true;
+                }
+                return defended;
+            }
+            return defended;
+        }
+
+        //Attacking phase for human players
+        public bool cardAttackValidation(Card attackingCard)
+        {
+            bool attack = false;
+
+            if(theTalon.Count == 0)
+            {
+                attack = true;
+            }
+
+            if (theTalon.Count % 2 != 0)
+            {
+                if(attackingCard.Rank == theTalon[theTalon.Count].Rank | attackingCard.Rank == theTalon[theTalon.Count - 1].Rank)
+                {
+                    attack = true;
+                }
+            }                
+            return attack;
+        }
     }
 }

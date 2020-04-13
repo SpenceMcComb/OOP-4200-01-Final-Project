@@ -7,93 +7,207 @@ namespace Final_Project_Tester
     /// <summary>
     /// Card class that will be a specific card within a deck
     /// </summary>
-    public class Card : ICloneable
+    public class Card : ICloneable, IComparable
     {
+        /*
+         * PROPERTIES
+         */
+         
+        // Suit property, used to get or set the Suit
+        protected Suit mySuit;
+        public Suit Suit
+        {
+            get { return mySuit; }
+            set { mySuit = value; }
+        }
 
-        /// <summary>
-        /// Returns a shallow copy of the object given
-        /// </summary>
-        /// <returns>object</returns>
+        // Rank property, used to get or set the Rank
+        protected Rank myRank;
+        public Rank Rank
+        {
+            get { return myRank; }
+            set { myRank = value; }
+        }
+
+        // CardValue property, used to get or set the Card's value
+        protected int myValue;
+        public int CardValue
+        {
+            get { return myValue; }
+            set { myValue = value; }
+        }
+
+        // Alternate value property, used to set or get an alternate value for certain games (nullable)
+        protected int? altValue = null;
+        public int? AlternateValue
+        {
+            get { return altValue; }
+            set { altValue = value; }
+        }
+
+        // FaceUp property, used to get or set whether the card is face up
+        protected bool faceUp = false;
+        public bool FaceUp
+        {
+            get { return faceUp; }
+            set { faceUp = value; }
+        }
+
+        protected bool lastCard = false;
+        public bool LastCard
+        {
+            get { return lastCard; }
+            set { lastCard = value; }
+        }
+
+        // Flag for trump usage. If true, trumps are valued higher than other suits
+        public static bool useTrumps = false;
+
+        // Set the default trump suit if useTrumps is true
+        public static Suit trump = Suit.Club;
+
+        // Indicates whether aces are considered high value or low
+        public static bool isAceHigh = true;
+
+        // Returns a shallow copy of the object
         public object Clone()
         {
-            return MemberwiseClone();
+            return this.MemberwiseClone();
         }
 
-        // Read only enumerator fields
-        public readonly Suit suit;
-        public readonly Rank rank;
+        /*
+         * CONSTRUCTORS
+         */
 
         /// <summary>
-        /// Parameterized constructor
+        /// Card constructor
+        /// Initializes the playing card object. By defualt, card is face down with no alternate value.
         /// </summary>
-        /// <param name="newSuit">Suit of the card being passed to the method</param>
-        /// <param name="newRank">Rank of the card being passed to the method</param>
-        public Card(Suit newSuit, Rank newRank)
+        /// <param name="rank"></param>
+        /// <param name="suit"></param>
+        public Card(Rank rank = Rank.Ace, Suit suit = Suit.Heart)
         {
-            suit = newSuit;
-            rank = newRank;
+            this.myRank = rank;
+            this.mySuit = suit;
+            this.myValue = (int)rank;
         }
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        private Card()
+
+        /*
+         * OPERATOR OVERLOADS
+         */
+
+        // Equality operator
+        public static bool operator ==(Card left, Card right)
         {
-
+            return (left.CardValue == right.CardValue);
         }
 
-        /// <summary>
-        /// Returns a human readable string of the card
-        /// </summary>
-        /// <returns>string</returns>
-        public override string ToString()
+        // Inequality operator
+        public static bool operator !=(Card left, Card right)
         {
-            return "The " + rank + " of " + suit + "s";
+            return (left.CardValue != right.CardValue);
         }
 
-        /// <summary>
-        /// Overriding the less than operator
-        /// </summary>
-        /// <param name="left">The left card operand</param>
-        /// <param name="right">The right card operand</param>
-        /// <returns>bool</returns>
-        public static bool operator <(Card left, Card right)
+        // Another equality check
+        public override bool Equals(object obj)
         {
-            return (left.rank < right.rank);
+            return (this.CardValue == ((Card)obj).CardValue);
         }
 
-        /// <summary>
-        /// Overriding the less than or equal to operator
-        /// </summary>
-        /// <param name="left">The left card operand</param>
-        /// <param name="right">The right card operand</param>
-        /// <returns>bool</returns>
-        public static bool operator <=(Card left, Card right)
-        {
-            return (left < right || left.rank == right.rank);
-        }
-
-        /// <summary>
-        /// Overriding the greater than operator
-        /// </summary>
-        /// <param name="left">The left card operand</param>
-        /// <param name="right">The right card operand</param>
-        /// <returns>bool</returns>
+        // Determines if a card is superior than another
         public static bool operator >(Card left, Card right)
         {
-            return !(left <= right);
+            return (left.CardValue > right.CardValue);
+        }
+
+        // Determines if a card is inferior to another
+        public static bool operator <(Card left, Card right)
+        {
+            return (left.CardValue < right.CardValue);
+        }
+
+        // Determines if a card is equivalent or of greater value than another
+        public static bool operator >=(Card left, Card right)
+        {
+            return (left.CardValue >= right.CardValue);
+        }
+
+        // Determines if a card is equivalent or of lesser value than another
+        public static bool operator <=(Card left, Card right)
+        {
+            return (left.CardValue <= right.CardValue);
+        }
+
+        // Used for comparing cards
+        public override int GetHashCode()
+        {
+            return this.myValue * 100 + (int)this.mySuit * 10 + ((this.faceUp)?1:0);
+        }
+
+        
+
+        /// <summary>
+        /// DebugString
+        /// Generates a strign showing the state of the card object; useful for debugging
+        /// </summary>
+        /// <returns></returns>
+        public string DebugString()
+        {
+            string cardState = (string)(myRank.ToString() + " of " + mySuit.ToString()).PadLeft(20);
+            cardState += (string)((FaceUp) ? "(Face Up)" : "(Face Down)").PadLeft(12);
+            cardState += " Value: " + myValue.ToString().PadLeft(2);
+            cardState += ((altValue != null) ? "/" + altValue.ToString() : "");
+            return cardState;
         }
 
         /// <summary>
-        /// Overriding the greater than than or equal to operator
+        /// Overrides the base ToString() method
         /// </summary>
-        /// <param name="left">The left card operand</param>
-        /// <param name="right">The right card operand</param>
-        /// <returns>bool</returns>
-        public static bool operator >=(Card left, Card right)
+        /// <returns></returns>
+        public override string ToString()
         {
-            return !(left < right);
+            string cardString;
+
+            if (faceUp)
+            {
+                cardString = myRank.ToString() + " of " + mySuit.ToString();
+            }
+            else
+            {
+                cardString = "Face Down";
+            }
+            return cardString;
+        }
+
+        /// <summary>
+        /// CompareTo method
+        /// Card-specific comparison method used to sort Card instances.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public virtual int CompareTo(object obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("Unable to copare a Card to a null object.");
+            }
+
+            // Convert the default argument object to a card object
+            Card compareCard = obj as Card;
+
+            // Conversion worked
+            if (compareCard != null)
+            {
+                // Compare based on the value, then the suit
+                int thisSort = this.myValue * 10 + (int)this.mySuit;
+                int compareCardSort = compareCard.myValue * 10 + (int)compareCard.mySuit;
+                return (thisSort.CompareTo(compareCardSort));
+            }
+            else
+            {
+                throw new ArgumentException("Object being compared cannot be converted to a Card object.");
+            }
         }
     }
 }
-
